@@ -1,0 +1,127 @@
+.gruposContainer {
+  padding: 20px;
+}
+
+.pageTitle {
+  font-size: 2em;
+  color: var(--text-color-light);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.formContainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  background-color: var(--card-background);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  flex-wrap: wrap;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inputField {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  font-size: 1em;
+  color: var(--text-color-light);
+  background-color: #333;
+}
+
+.addButton, .cancelButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  color: var(--text-color-light);
+}
+
+.addButton {
+  background-color: var(--primary-color);
+}
+
+.addButton:hover {
+  background-color: #e67e22;
+}
+
+.cancelButton {
+  background-color: #555;
+}
+
+.cancelButton:hover {
+  background-color: #777;
+}
+
+.listContainer {
+  background-color: var(--card-background);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.listTitle {
+  font-size: 1.5em;
+  color: var(--text-color-light);
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+}
+
+.gruposList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.grupoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.grupoItem:last-child {
+  border-bottom: none;
+}
+
+.groupActions {
+  display: flex;
+  gap: 10px;
+}
+
+.editButton,
+.deleteButton {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-color-light);
+  transition: opacity 0.3s ease;
+}
+
+.editButton {
+  background-color: var(--secondary-color);
+  color: #333;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  opacity: 0.8;
+}.loadingMessage {
+  text-align: center;
+  font-size: 1.5em;
+  color: var(--primary-color);
+  margin-top: 50px;
+}

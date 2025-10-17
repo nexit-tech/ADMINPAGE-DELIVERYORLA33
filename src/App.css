@@ -1,0 +1,44 @@
+:root {
+  /* Cores do novo design */
+  --primary-color: #ff8c00;
+  --secondary-color: #f0f2f5;
+  --background-color: #1a1a1a;
+  --card-background: #242424;
+  --text-color-light: #fff;
+  --text-color-dark: #fff;
+  --text-color-secondary: #aaaaaa;
+  --font-family: 'Arial', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color-dark);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilos globais para elementos comuns */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-color-light);
+}
+
+button {
+  font-family: var(--font-family);
+  transition: all 0.2s ease-in-out;
+}
+
+.orla-logo {
+  filter: brightness(1.2); /* Deixa a logo mais visível no tema escuro */
+}
