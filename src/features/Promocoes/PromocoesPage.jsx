@@ -53,13 +53,11 @@ function PromocoesPage() {
     let resultado;
 
     if (savedPromocao.id) {
-      // Lógica de edição
       resultado = await atualizarPromocao(savedPromocao);
       if (resultado) {
         setPromocoes(promocoes.map(p => (p.id === resultado.id ? resultado : p)));
       }
     } else {
-      // Lógica de adição
       resultado = await adicionarPromocao(savedPromocao);
       if (resultado) {
         setPromocoes([...promocoes, resultado]);
@@ -75,7 +73,22 @@ function PromocoesPage() {
         setLoading(false);
     }
   };
+
+  // Função para calcular o valor total da promoção (se não for preço fixo)
+  const calcularValorItens = (itens) => {
+    if (!itens || itens.length === 0) return 0;
+    return itens.reduce((total, item) => total + (item.preco_ajustado * item.quantidade), 0);
+  };
   
+  // Função que decide o que exibir no card
+  const getValorDisplay = (promocao) => {
+      if (promocao.valor_total) {
+          return `Preço Fixo: R$ ${promocao.valor_total.toFixed(2)}`;
+      }
+      const totalItens = calcularValorItens(promocao.itens);
+      return `Valor Calculado: R$ ${totalItens.toFixed(2)}`;
+  }
+
   if (loading) {
     return <p className={styles.loadingMessage}>Carregando promoções...</p>;
   }
@@ -106,10 +119,14 @@ function PromocoesPage() {
                     <div className={styles.promocaoInfo}>
                       <h2 className={styles.promocaoNome}>{promocao.nome}</h2>
                       <p className={styles.promocaoDescricao}>{promocao.descricao}</p>
-                      <span className={styles.promocaoValidade}>Validade: {promocao.validade}</span>
+                      
+                      {/* EXIBE O VALOR DA PROMOÇÃO (FIXO OU CALCULADO) */}
+                      <span className={styles.promocaoValor}>
+                          {getValorDisplay(promocao)}
+                      </span>
+                      
                       <ul className={styles.promocaoItens}>
                         {promocao.itens.map((item, index) => (
-                          // Ajusta para usar os nomes de coluna do DB: produto_nome e preco_ajustado
                           <li key={index}>{item.quantidade}x {item.produto_nome} (R$ {item.preco_ajustado.toFixed(2)})</li>
                         ))}
                       </ul>

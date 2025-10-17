@@ -57,6 +57,22 @@
   opacity: 0.9;
 }
 
+.linkExistingButton {
+    background-color: #007bff;
+    color: var(--text-color-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.3s;
+}
+
+.linkExistingButton:hover {
+    opacity: 0.9;
+}
+
+
 .listHeader {
   display: flex;
   justify-content: space-between;
@@ -118,6 +134,22 @@
   opacity: 0.8;
 }
 
+.linkButton {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: var(--text-color-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.3s;
+}
+
+.linkButton:hover {
+    opacity: 0.8;
+}
+
+
 .emptyMessage {
   text-align: center;
   color: var(--text-color-secondary);
@@ -136,4 +168,21 @@
 
 .backButton:hover {
   background-color: #777;
+}
+
+/* Estilos de edição de preço */
+.priceEditContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.priceInput {
+  width: 80px;
+  padding: 5px;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: #333;
+  color: var(--text-color-light);
 }

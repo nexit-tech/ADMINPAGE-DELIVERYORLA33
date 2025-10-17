@@ -83,17 +83,19 @@
   margin: 0 0 5px 0;
 }
     
-.promocaoValidade {
-  font-size: 0.8em;
-  color: #888;
-  margin-bottom: 10px;
+/* NOVO ESTILO: Para o valor da promoção */
+.promocaoValor {
+  font-size: 1.1em;
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-bottom: 10px; /* Adiciona espaço entre o valor e a lista de itens */
 }
     
 .promocaoItens {
-  list-style: none;
-  padding: 0;
+  list-style: disc; /* Usando disc para diferenciar do Valor */
+  padding-left: 20px;
   margin: 0;
-  color: var(--text-color-light);
+  color: var(--text-color-secondary);
 }
 
 .promocaoItens li {
@@ -136,7 +138,8 @@
   text-align: center;
   color: var(--text-color-secondary);
   margin-top: 10px;
-}.loadingMessage {
+}
+.loadingMessage {
   text-align: center;
   font-size: 1.5em;
   color: var(--primary-color);

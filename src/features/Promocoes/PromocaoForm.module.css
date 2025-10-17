@@ -6,6 +6,7 @@
   max-width: 800px;
   margin: 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative; 
 }
 
 .formTitle {
@@ -28,7 +29,8 @@
 }
 
 .inputField,
-.textareaField {
+.textareaField,
+.selectField {
   width: 100%;
   padding: 12px;
   border: 1px solid #444;
@@ -40,7 +42,8 @@
 }
 
 .inputField:focus,
-.textareaField:focus {
+.textareaField:focus,
+.selectField:focus {
   outline: none;
   border-color: var(--primary-color);
 }
@@ -58,34 +61,185 @@
   padding-bottom: 10px;
 }
 
+/* ESTILOS PARA SELEÇÃO DE GRUPOS E PRODUTOS */
+.groupProductSelector {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+.groupSelectorWrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.groupSelectorWrapper label {
+    margin-bottom: 5px;
+}
+
+.selectField {
+    flex: 1;
+}
+
+.addGroupButton { /* NOVO ESTILO PARA O BOTÃO DE ADICIONAR GRUPO */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: var(--text-color-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.3s;
+    flex-shrink: 0;
+}
+
+.addGroupButton:hover {
+    background-color: #0069d9;
+}
+
+
+.productListArea {
+    margin-top: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.productListTitle {
+    font-size: 1em;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+}
+
+.productListSelector {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.productItemSelect {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dotted #444;
+}
+
+.productItemSelect:last-child {
+    border-bottom: none;
+}
+
+.productSelectName {
+    flex: 1;
+    color: var(--text-color-secondary);
+    font-size: 0.9em;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 10px;
+}
+
+/* Estilos de inputs temporários na lista de seleção */
+.tempItemQuantity, .tempItemPrice {
+    padding: 4px 8px;
+    width: 60px;
+    text-align: center;
+    border: 1px solid #555;
+    background-color: #444;
+    color: var(--text-color-light);
+    border-radius: 3px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.tempItemQuantity:disabled, .tempItemPrice:disabled {
+    background-color: #555;
+    color: var(--text-color-secondary);
+    cursor: not-allowed;
+}
+
+.addedTag {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 0.8em;
+    padding: 5px 10px;
+    border: 1px solid #28a745;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+
+/* ESTILOS PARA LISTA FINAL EDITÁVEL (AGRUPAMENTO) */
+.finalItemList {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+.finalGroupSection { /* Estilo para a seção do grupo na lista final */
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #555;
+}
+
+.finalGroupSection:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.finalGroupHeader { /* Estilo para o cabeçalho do grupo na lista final */
+    font-size: 1.1em;
+    color: var(--text-color-light);
+    margin: 0 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+}
+
 .itemGroup {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
   flex-wrap: wrap;
   align-items: center;
+  background-color: #444;
+  padding: 8px;
+  border-radius: 4px;
 }
 
-.itemGroup .inputField {
-  flex: 1;
+.productFinalName {
+    flex: 1;
+    color: var(--text-color-light);
+    font-weight: bold;
+    min-width: 150px;
 }
 
 .itemQuantity {
   width: 60px;
   text-align: center;
   padding: 12px;
-  border: 1px solid #444;
+  border: 1px solid #555;
   border-radius: 5px;
-  background-color: #333;
+  background-color: #555;
   color: var(--text-color-light);
 }
 
 .itemPrice {
   width: 100px;
   padding: 12px;
-  border: 1px solid #444;
+  border: 1px solid #555;
   border-radius: 5px;
-  background-color: #333;
+  background-color: #555;
   color: var(--text-color-light);
 }
 
@@ -104,21 +258,6 @@
   opacity: 0.8;
 }
 
-.addItemButton {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: var(--text-color-light);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: opacity 0.3s;
-  margin-top: 10px;
-}
-
-.addItemButton:hover {
-  opacity: 0.9;
-}
 
 .formActions {
   display: flex;
@@ -152,4 +291,15 @@
 
 .cancelButton:hover {
   background-color: #777;
+}
+
+.loadingMessage {
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.emptyMessage {
+    color: var(--text-color-secondary);
+    text-align: center;
+    padding: 10px;
 }

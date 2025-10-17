@@ -1,13 +1,13 @@
 import { supabase } from './lib/supabase';
 
 // ------------------------------------
-// Serviço de Promoções (Complexo)
+// Serviço de Promoções
 // ------------------------------------
 
 export async function buscarTodasPromocoes() {
   const { data: promocoesData, error: promocoesError } = await supabase
     .from('promocoes')
-    .select('*, itens:promocao_itens(*)') // Busca a promoção e seus itens em uma única query
+    .select('*, itens:promocao_itens(*)') 
     .order('criado_em', { ascending: false });
 
   if (promocoesError) {
@@ -15,9 +15,9 @@ export async function buscarTodasPromocoes() {
     return [];
   }
   
-  // Mapeia para garantir a formatação de preço nos itens
   return promocoesData.map(promocao => ({
     ...promocao,
+    valor_total: parseFloat(promocao.valor_total), // Garante que o valor total seja float
     itens: promocao.itens.map(item => ({
       ...item,
       preco_ajustado: parseFloat(item.preco_ajustado),
@@ -26,7 +26,6 @@ export async function buscarTodasPromocoes() {
 }
 
 export async function adicionarPromocao(promocao) {
-  // 1. Inserir o Cabeçalho da Promoção
   const { itens, ...promocaoHeader } = promocao;
   
   const { data: headerData, error: headerError } = await supabase
@@ -41,7 +40,6 @@ export async function adicionarPromocao(promocao) {
   
   const novaPromocaoId = headerData[0].id;
   
-  // 2. Inserir os Itens da Promoção (vinculados ao novo ID)
   const itensFormatados = itens.map(item => ({
     promocao_id: novaPromocaoId,
     produto_nome: item.produto,
@@ -49,22 +47,19 @@ export async function adicionarPromocao(promocao) {
     quantidade: item.quantidade,
   }));
 
-  const { data: itensData, error: itensError } = await supabase
+  const { error: itensError } = await supabase
     .from('promocao_itens')
-    .insert(itensFormatados)
-    .select();
+    .insert(itensFormatados);
 
   if (itensError) {
-    // Em um sistema robusto, faríamos um rollback aqui
     console.error('Erro ao adicionar itens da promoção:', itensError);
     return null;
   }
 
-  return { ...headerData[0], itens: itensData };
+  return { ...headerData[0], itens: itensFormatados };
 }
 
 export async function atualizarPromocao(promocao) {
-  // 1. Atualizar o Cabeçalho da Promoção
   const { itens, ...promocaoHeader } = promocao;
   
   const { error: headerError } = await supabase
@@ -77,7 +72,7 @@ export async function atualizarPromocao(promocao) {
     return null;
   }
 
-  // 2. Sincronizar Itens: Deletar todos os antigos e inserir os novos
+  // Sincronizar Itens: Deletar todos os antigos e inserir os novos
   const { error: deleteError } = await supabase
     .from('promocao_itens')
     .delete()
@@ -95,21 +90,19 @@ export async function atualizarPromocao(promocao) {
     quantidade: item.quantidade,
   }));
 
-  const { data: itensData, error: itensError } = await supabase
+  const { error: itensError } = await supabase
     .from('promocao_itens')
-    .insert(itensFormatados)
-    .select();
+    .insert(itensFormatados);
 
   if (itensError) {
     console.error('Erro ao reinserir novos itens:', itensError);
     return null;
   }
 
-  return { ...promocaoHeader, itens: itensData };
+  return { ...promocaoHeader, itens: itensFormatados };
 }
 
 export async function deletarPromocao(id) {
-  // Devido ao ON DELETE CASCADE no SQL, deletar o cabeçalho deleta os itens.
   const { error } = await supabase
     .from('promocoes')
     .delete()
