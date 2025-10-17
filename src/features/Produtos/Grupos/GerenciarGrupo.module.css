@@ -1,0 +1,139 @@
+.gerenciarContainer {
+  padding: 20px;
+}
+
+.gerenciarTitle {
+  font-size: 2em;
+  color: var(--text-color-light);
+  margin-bottom: 20px;
+}
+
+.sectionContainer {
+  background-color: var(--card-background);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sectionTitle {
+  font-size: 1.5em;
+  color: var(--text-color-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.addProductForm {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.inputField {
+  flex: 1;
+  min-width: 150px;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  font-size: 1em;
+  color: var(--text-color-light);
+  background-color: #333;
+}
+
+.addButton {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.addButton:hover {
+  opacity: 0.9;
+}
+
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productCount {
+  font-size: 0.9em;
+  color: var(--text-color-secondary);
+}
+
+.productList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.productItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.productItem:last-child {
+  border-bottom: none;
+}
+
+.productName {
+  flex: 1;
+  font-weight: bold;
+  color: var(--text-color-light);
+}
+
+.productPrice {
+  color: var(--primary-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.productPrice:hover {
+  opacity: 0.8;
+}
+
+.deleteButton {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: opacity 0.3s;
+}
+
+.deleteButton:hover {
+  opacity: 0.8;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: var(--text-color-secondary);
+  margin-top: 10px;
+}
+
+.backButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #555;
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #777;
+}

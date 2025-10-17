@@ -1,0 +1,77 @@
+.produtoItem {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background-color: #333;
+  margin-bottom: 10px;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.produtoItem:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transform: translateY(-3px);
+}
+
+.produtoImagem {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.produtoInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.produtoNome {
+  margin: 0 0 5px 0;
+  font-size: 1.2em;
+  color: var(--text-color-light);
+}
+
+.produtoDescricao {
+  margin: 0 0 5px 0;
+  font-size: 0.9em;
+  color: var(--text-color-secondary);
+}
+
+.produtoPreco {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.produtoActions {
+  display: flex;
+  gap: 10px;
+}
+
+.editButton,
+.deleteButton {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-color-light);
+  transition: opacity 0.3s ease;
+}
+
+.editButton {
+  background-color: var(--secondary-color);
+  color: #333;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  opacity: 0.8;
+}

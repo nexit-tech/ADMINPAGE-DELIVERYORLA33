@@ -1,0 +1,155 @@
+.formContainer {
+  background-color: var(--card-background);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.formTitle {
+  font-size: 1.8em;
+  color: var(--text-color-light);
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color-secondary);
+}
+
+.inputField,
+.textareaField {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  font-size: 1em;
+  color: var(--text-color-light);
+  background-color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.inputField:focus,
+.textareaField:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.textareaField {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.sectionTitle {
+  font-size: 1.2em;
+  color: var(--text-color-light);
+  margin: 25px 0 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+}
+
+.itemGroup {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.itemGroup .inputField {
+  flex: 1;
+}
+
+.itemQuantity {
+  width: 60px;
+  text-align: center;
+  padding: 12px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: var(--text-color-light);
+}
+
+.itemPrice {
+  width: 100px;
+  padding: 12px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: var(--text-color-light);
+}
+
+.removeButton {
+  padding: 12px 15px;
+  background-color: #dc3545;
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s;
+}
+
+.removeButton:hover {
+  opacity: 0.8;
+}
+
+.addItemButton {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s;
+  margin-top: 10px;
+}
+
+.addItemButton:hover {
+  opacity: 0.9;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.submitButton,
+.cancelButton {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: var(--text-color-light);
+}
+
+.submitButton {
+  background-color: var(--primary-color);
+}
+
+.cancelButton {
+  background-color: #555;
+}
+
+.submitButton:hover {
+  background-color: #e67e22;
+}
+
+.cancelButton:hover {
+  background-color: #777;
+}
