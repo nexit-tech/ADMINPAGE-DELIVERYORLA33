@@ -2,11 +2,32 @@
   padding: 20px;
 }
 
+.kanbanHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 .pageTitle {
   font-size: 2.5em;
-  text-align: center;
-  margin-bottom: 20px;
-  color: var(--text-color-light); /* Cor do título ajustada para o tema escuro */
+  margin: 0;
+  color: var(--text-color-light); 
+}
+
+.addButton {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.3s;
+}
+
+.addButton:hover {
+    opacity: 0.9;
 }
 
 .kanbanBoard {
@@ -16,7 +37,7 @@
 }
 
 .column {
-  background-color: var(--card-background); /* Fundo da coluna para o tema escuro */
+  background-color: var(--card-background);
   border-radius: 8px;
   padding: 15px;
   display: flex;
@@ -36,7 +57,7 @@
 }
 
 .pedidoCard {
-  background-color: #333; /* Fundo dos cards de pedido para o tema escuro */
+  background-color: #333;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   padding: 15px;
@@ -75,15 +96,15 @@
 }
 
 .Novo {
-  background-color: #007bff; /* Azul */
+  background-color: #007bff;
 }
 
 .Empreparo {
-  background-color: #ffc107; /* Amarelo */
+  background-color: #ffc107;
 }
 
 .Ementrega {
-  background-color: #28a745; /* Verde */
+  background-color: #28a745;
 }
 
 .cardBody {
@@ -136,7 +157,8 @@
 
 .acceptButton,
 .declineButton,
-.readyButton {
+.readyButton,
+.finalizarButton {
   flex: 1;
   padding: 10px;
   border: none;
@@ -148,33 +170,40 @@
 }
 
 .acceptButton {
-  background-color: #28a745; /* Verde */
+  background-color: #28a745;
 }
 
 .declineButton {
-  background-color: #dc3545; /* Vermelho */
+  background-color: #dc3545;
 }
 
 .readyButton {
-  background-color: #17a2b8; /* Azul claro */
+  background-color: #17a2b8;
+}
+
+.finalizarButton {
+    background-color: var(--primary-color);
 }
 
 .acceptButton:hover,
 .declineButton:hover,
-.readyButton:hover {
-  opacity: 0.9;
-}.finalizarButton {
-  background-color: var(--primary-color);
-  color: var(--text-color-light);
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: opacity 0.3s;
-}
-
+.readyButton:hover,
 .finalizarButton:hover {
   opacity: 0.9;
+}
+
+.emptyColumn {
+    color: var(--text-color-secondary);
+    text-align: center;
+    padding: 20px;
+    border: 1px dashed #444;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.loadingMessage {
+  text-align: center;
+  font-size: 1.5em;
+  color: var(--primary-color);
+  margin-top: 50px;
 }
