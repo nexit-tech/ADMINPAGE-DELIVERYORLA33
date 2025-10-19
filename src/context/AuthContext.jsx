@@ -19,8 +19,8 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // Verifica a sessão fictícia no localStorage para persistência
-        const storedSession = localStorage.getItem('orla33_mock_auth');
+        // MUDEI PARA sessionStorage: Verifica a sessão fictícia que dura apenas enquanto a aba estiver aberta
+        const storedSession = sessionStorage.getItem('orla33_mock_auth');
         if (storedSession === 'true') {
             // Simula que o usuário está logado
             setUser({ id: 'mock-user-123', email: MOCK_EMAIL }); 
@@ -36,7 +36,8 @@ export const AuthProvider = ({ children }) => {
         if (email === MOCK_EMAIL && password === MOCK_PASSWORD) {
             const mockUser = { id: 'mock-user-123', email: MOCK_EMAIL };
             setUser(mockUser);
-            localStorage.setItem('orla33_mock_auth', 'true'); // Persiste o login
+            // MUDEI PARA sessionStorage: Persiste o login SÓ até o fechamento da aba
+            sessionStorage.setItem('orla33_mock_auth', 'true'); 
             setLoading(false);
             return mockUser;
         } else {
@@ -48,7 +49,8 @@ export const AuthProvider = ({ children }) => {
     // Função de Logout (Fictício)
     const signOut = async () => {
         setUser(null);
-        localStorage.removeItem('orla33_mock_auth'); // Remove a persistência
+        // MUDEI PARA sessionStorage: Remove a persistência
+        sessionStorage.removeItem('orla33_mock_auth'); 
     };
 
     const value = {

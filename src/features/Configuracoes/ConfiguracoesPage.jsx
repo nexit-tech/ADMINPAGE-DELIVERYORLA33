@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Configuracoes.module.css';
-import { buscarConfiguracoes, salvarConfiguracoes } from '../../services/configuracoes';
+import { useAuth } from '../../context/AuthContext'; // Importa o hook de autenticação
+import { buscarConfiguracoes, salvarConfiguracoes } from '../../services/configuracoes'; // Serviços Supabase
 
 // Dados mock para permissões são mantidos, pois não criamos a tabela de usuários/permissões no DB
 const permissoesMock = [
@@ -13,8 +14,8 @@ const permissoesMock = [
 const mapToState = (dbConfig) => ({
     nomeLoja: dbConfig.nome_loja || '',
     logoUrl: dbConfig.logo_url || '',
-    horarioAbertura: dbConfig.horario_abertura || '18:00',
-    horarioFechamento: dbConfig.horario_fechamento || '23:00',
+    horarioAbertura: dbConfig.horario_abertura || '',
+    horarioFechamento: dbConfig.horario_fechamento || '',
     integracoes: {
         whatsapp: dbConfig.integracao_whatsapp || false,
         gatewayPagamento: dbConfig.integracao_gateway_pagamento || false,
@@ -22,6 +23,8 @@ const mapToState = (dbConfig) => ({
 });
 
 function ConfiguracoesPage() {
+  const { user, signOut } = useAuth(); // Puxa o usuário e a função signOut do contexto
+
   const [configuracoes, setConfiguracoes] = useState({});
   const [permissoes, setPermissoes] = useState(permissoesMock);
   const [integracoes, setIntegracoes] = useState({});
@@ -99,6 +102,12 @@ function ConfiguracoesPage() {
     if (window.confirm('Tem certeza que deseja remover esta permissão?')) {
       setPermissoes(permissoes.filter(p => p.id !== id));
     }
+  };
+  
+  const handleLogout = () => {
+      if (window.confirm("Tem certeza que deseja sair do painel?")) {
+          signOut();
+      }
   };
 
   if (loading) {
@@ -198,6 +207,21 @@ function ConfiguracoesPage() {
           ))}
         </ul>
       </div>
+      
+      {/* NOVO BOTÃO DE SAIR/LOGOUT */}
+      <div className={styles.logoutSection}>
+        <h2 className={styles.sectionTitle}>Segurança e Acesso</h2>
+        <p className={styles.sectionDescription}>
+            Usuário logado: {user ? user.email : 'N/A'}
+        </p>
+        <button 
+            onClick={handleLogout} 
+            className={styles.logoutButton}
+        >
+            Sair do Painel
+        </button>
+      </div>
+      
     </div>
   );
 }

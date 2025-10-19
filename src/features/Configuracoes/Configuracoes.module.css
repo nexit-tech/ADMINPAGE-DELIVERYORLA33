@@ -191,4 +191,23 @@ input:checked + .slider:before {
   font-size: 1.5em;
   color: var(--primary-color);
   margin-top: 50px;
+}.logoutButton {
+    background-color: #dc3545; /* Cor vermelha para indicar ação de saída */
+    color: var(--text-color-light);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.1s;
+    margin-top: 20px;
+    display: block; /* Ocupa a largura total da seção */
+    width: 100%;
+    max-width: 300px; /* Limita a largura para melhor aparência */
+}
+
+.logoutButton:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
 }
