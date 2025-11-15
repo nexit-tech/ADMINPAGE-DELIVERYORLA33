@@ -1,12 +1,21 @@
 import styles from './ProductList.module.css';
-import { IoPencil, IoTrash } from 'react-icons/io5'; // <-- Adicione IoTrash
+import { IoPencil, IoTrash } from 'react-icons/io5';
 
 // Sub-componente para o item do produto (COM alteração)
-function ProductItem({ product, onEdit, onDelete }) { // <-- Nova prop
+function ProductItem({ product, onEdit, onDelete }) {
   const hasPromo = product.promo_price && parseFloat(product.promo_price) > 0;
 
   return (
     <div className={styles.item}>
+      {/* --- ADICIONA A IMAGEM AQUI --- */}
+      {product.image_url && (
+        <img 
+          src={product.image_url} 
+          alt={product.name} 
+          className={styles.itemImage} 
+        />
+      )}
+
       <div className={styles.info}>
         <h4 className={styles.name}>{product.name}</h4>
         <p className={styles.description}>{product.description}</p>
@@ -22,7 +31,6 @@ function ProductItem({ product, onEdit, onDelete }) { // <-- Nova prop
         </div>
       </div>
       <div className={styles.actions}>
-        {/* --- BOTÃO DE EXCLUIR NOVO --- */}
         <button 
           className={`${styles.actionButton} ${styles.deleteButton}`} 
           onClick={() => onDelete(product.id, product.name)}
@@ -40,18 +48,17 @@ function ProductItem({ product, onEdit, onDelete }) { // <-- Nova prop
   );
 }
 
-// Componente principal da lista (COM alteração)
+// ... (Restante do arquivo não muda) ...
 export default function ProductList({ 
   title,
   products, 
   onAddProduct, 
   onEditProduct,
-  onDeleteProduct, // <-- Nova prop
+  onDeleteProduct,
   disableAdd 
 }) {
   return (
     <div className={styles.container}>
-      {/* ... (header idêntico) ... */}
       <div className={styles.header}>
         <h2>{title}</h2>
         <button 
@@ -75,7 +82,7 @@ export default function ProductList({
               key={prod.id} 
               product={prod} 
               onEdit={onEditProduct} 
-              onDelete={onDeleteProduct} // <-- Passa a prop
+              onDelete={onDeleteProduct}
             />
           ))
         )}
