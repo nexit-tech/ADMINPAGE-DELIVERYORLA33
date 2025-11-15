@@ -1,0 +1,158 @@
+.sidebar {
+  background-color: #fff;
+  border-right: 1px solid var(--border-color);
+  width: 280px;
+  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Lista do item "Promoções" */
+.topList {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0.5rem 0;
+}
+
+.topList button {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 1.1rem; 
+  font-weight: 700;
+  color: var(--text-dark);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+/* Cabeçalho "Categorias" (clicável) */
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid #f0f0f0; 
+  margin-top: 0.5rem;
+}
+.accordionHeader:hover {
+  background-color: var(--background-light);
+}
+
+.accordionHeader h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.chevron {
+  font-size: 1.2rem;
+  color: var(--text-medium);
+  transition: transform 0.3s ease;
+}
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+/* Container da lista de categorias */
+.collapsible {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.collapsible.open {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Lista interna de categorias */
+.list {
+  list-style: none;
+  padding: 0.5rem 0 0 0;
+  margin: 0;
+}
+
+/* --- CORREÇÃO DO BOTÃO ESCROTO --- */
+
+/* 1. O <li> vira o container flex */
+.list li {
+  display: flex;
+  justify-content: space-between; /* <-- Joga a lixeira para o final */
+  align-items: center; /* <-- Alinha verticalmente */
+  width: 100%;
+}
+.list li:hover {
+  background-color: var(--background-light);
+}
+
+/* 2. O botão da categoria ocupa o espaço */
+.categoryButton {
+  flex-grow: 1; /* <-- Ocupa o espaço */
+  padding: 0.9rem 1.5rem;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 1rem;
+  color: var(--text-medium);
+  cursor: pointer;
+  border-left: 3px solid transparent; /* <-- Borda fica aqui */
+}
+
+/* 3. Estilo do botão de deletar */
+.deleteCategoryButton {
+  flex-shrink: 0; /* <-- Impede de encolher */
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem; /* Padding para clicar */
+  cursor: pointer;
+  border-radius: 4px;
+}
+.deleteCategoryButton:hover {
+  color: var(--danger-color);
+  background-color: #fdf2f2;
+}
+
+/* 4. Estilo ATIVO (só no botão, não no <li>) */
+.categoryButton.active {
+  background-color: #f0f7ff;
+  color: var(--primary-color);
+  font-weight: 600;
+  border-left-color: var(--primary-color);
+}
+/* Estilo ativo para "Promoções" */
+.topList button.active {
+  background-color: #f0f7ff;
+  color: var(--primary-color);
+  font-weight: 700;
+  border-left-color: var(--primary-color);
+}
+/* --- FIM DA CORREÇÃO --- */
+
+
+/* Rodapé (para o botão "+ Nova Categoria") */
+.footer {
+  margin-top: auto; /* Empurra para o fundo */
+  padding: 1.5rem;
+}
+
+.addButton {
+  width: 100%;
+  background-color: transparent;
+  border: 1px dashed var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.75rem;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.addButton:hover {
+  background-color: #f0f7ff;
+}

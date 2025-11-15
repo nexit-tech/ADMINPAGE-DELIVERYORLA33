@@ -1,0 +1,214 @@
+.form {
+  /* --- CORREÇÃO DO SCROLL --- */
+  /* display: flex; */ /* <-- REMOVIDO */
+  /* flex-direction: column; */ /* <-- REMOVIDO */
+  display: block; /* <-- ADICIONADO */
+  
+  max-height: 70vh; 
+  overflow-y: auto;
+  /* Esconde o Scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.form::-webkit-scrollbar {
+  display: none;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem; /* Adicionado espaçamento */
+}
+.formGroup label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-medium);
+}
+.formGroup input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 1.5rem 0; /* Aumentado espaçamento */
+}
+
+/* Título */
+.form h3 {
+  margin-bottom: 1.5rem;
+}
+
+.groupsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 50px;
+}
+
+.group {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: white;
+  transition: box-shadow 0.2s ease;
+  transform-origin: 50% 50%; 
+  
+  /* --- CORREÇÃO DE SOBREPOSIÇÃO --- */
+  /* Nível base para os grupos */
+  position: relative;
+  z-index: 1;
+}
+
+/* --- ESTILOS DO DRAG-AND-DROP --- */
+.isDragging {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  
+  /* --- CORREÇÃO DE SOBREPOSIÇÃO --- */
+  /* Nível mais alto (fica acima de tudo) */
+  z-index: 99;
+}
+
+.dragHandle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  cursor: grab;
+  color: var(--text-light);
+}
+.dragHandle:hover {
+  color: var(--text-dark);
+}
+.dragHandle:active {
+  cursor: grabbing;
+}
+/* --- FIM ESTILOS DND --- */
+
+.groupHeader {
+  display: flex;
+  align-items: center; 
+  background-color: var(--background-light);
+  border-radius: 7px 7px 0 0; /* Arredonda cantos de cima */
+}
+
+.groupName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  flex-grow: 1; 
+}
+
+.removeGroupButton {
+  background: transparent;
+  border: none;
+  color: var(--danger-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 1rem 1rem 1rem;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #eee;
+}
+.item:last-child {
+  border-bottom: none;
+}
+.item span { font-weight: 500; }
+
+.itemControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.itemControls label {
+  font-size: 0.9rem;
+  color: var(--text-medium);
+}
+.itemControls input {
+  width: 70px;
+  padding: 0.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+.itemControls button {
+  background: transparent;
+  border: none;
+  color: var(--danger-color);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.addGroupControls {
+  display: flex;
+  gap: 0.5rem;
+  
+  /* --- CORREÇÃO DE SOBREPOSIÇÃO --- */
+  /* Nível intermediário (acima dos grupos base) */
+  position: relative;
+  z-index: 5; 
+  
+  /* Remove o fundo branco feio que eu adicionei antes */
+  /* background-color: #fff; */ 
+  /* border: 1px solid var(--border-color); */
+  /* border-radius: 8px; */
+  /* padding: 1rem; */
+  margin-top: 1.5rem; /* Adiciona espaço */
+}
+
+/* --- Wrapper para o Select Global --- */
+.selectWrapper {
+  flex: 1; 
+}
+
+.addGroupButton {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.addGroupButton:hover {
+  background-color: #005bb5;
+}
+
+.saveButton {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  
+  /* --- CORREÇÃO DE SOBREPOSIÇÃO --- */
+  /* Nível intermediário */
+  position: relative;
+  z-index: 5;
+  margin-top: 1.5rem; /* Adiciona espaço */
+}
+.saveButton:hover {
+  background-color: #006952;
+}

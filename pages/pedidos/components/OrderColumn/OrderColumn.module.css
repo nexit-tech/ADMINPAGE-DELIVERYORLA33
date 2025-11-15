@@ -1,0 +1,78 @@
+.column {
+  /* Layout da Coluna */
+  display: flex;
+  flex-direction: column; /* Organiza header e content em coluna */
+  
+  /* Altura e Largura */
+  height: 100%; /* Ocupa 100% da altura da <main> */
+  flex: 1; /* Cresce para preencher a largura da tela */
+  min-width: 320px;
+  
+  /* Estilos */
+  background-color: var(--background-medium);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.header {
+  /* Ocupa apenas a altura que precisa, sem crescer */
+  flex-shrink: 0; 
+  
+  /* Estilos */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+}
+
+.header h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.count {
+  background-color: var(--background-dark);
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* * ======================================================
+ * AQUI ESTÁ A PARTE IMPORTANTE
+ * ======================================================
+ */
+/* ... (o começo do seletor .content) ... */
+.content {
+  /* Layout da Lista */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; 
+  
+  /* Regras do flex */
+  flex: 1; 
+  min-height: 0; 
+  overflow-y: auto; 
+  
+  /* --- MUDANÇAS AQUI --- */
+
+  /* 1. Remova ou comente esta linha */
+  /* padding-right: 5px; */ 
+  
+  /* 2. Adicione estas duas linhas */
+  scrollbar-width: none; /* Para Firefox */
+  -ms-overflow-style: none; /* Para IE/Edge */
+}
+/* ====================================================== */
+
+
+/* Esconde a scrollbar no Chrome, Safari, etc. */
+.content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}

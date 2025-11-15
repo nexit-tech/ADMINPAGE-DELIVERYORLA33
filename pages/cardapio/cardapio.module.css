@@ -1,0 +1,25 @@
+/* Este CSS muda para um layout de sidebar + conteúdo */
+
+.container {
+  display: flex;
+  /* Altura total da tela menos a Navbar (65px) */
+  height: calc(100vh - 65px);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  max-width: none; /* Remove o max-width anterior */
+}
+
+/* O resto do CSS antigo foi movido para 
+   CategoryList.module.css e ProductList.module.css
+*/
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.5rem;
+  color: var(--text-medium);
+  height: calc(100vh - 65px); /* Altura total */
+}

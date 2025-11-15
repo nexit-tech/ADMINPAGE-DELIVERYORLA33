@@ -1,0 +1,104 @@
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.1s ease-in-out;
+
+  /* --- AQUI ESTÁ A CORREÇÃO --- */
+  /* Impede que o card seja "esmagado" verticalmente */
+  flex-shrink: 0;
+}
+
+.card:hover {
+  transform: translateY(-2px); /* Eleva o card levemente no hover */
+}
+
+.details {
+  padding: 1rem 1.25rem; /* Mais padding nas laterais */
+  border-bottom: 1px solid var(--border-color); /* Borda para separar detalhes das ações */
+}
+
+.clientName {
+  font-size: 1.15rem; /* Um pouco maior */
+  font-weight: 700; /* Mais negrito */
+  margin: 0 0 0.4rem 0; /* Espaçamento ajustado */
+  color: var(--text-dark);
+}
+
+.address {
+  font-size: 0.9rem;
+  color: var(--text-light); /* Cor mais clara para o endereço */
+  margin: 0 0 0.8rem 0;
+  /* border-bottom: 1px dashed #eee; */ /* Removi a borda dashed, a de cima já separa bem */
+  padding-bottom: 0.5rem; /* Menos padding abaixo do endereço */
+  line-height: 1.4;
+}
+
+.itemsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  color: var(--text-medium); /* Cor um pouco mais escura para os itens */
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem; /* Mais espaçamento entre os itens */
+}
+
+.itemsList li {
+  padding-left: 0.2rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  /* border-top: 1px solid #f0f0f0; */ /* Removido, já temos borda no .details */
+  padding: 0.8rem 1.25rem; /* Padding consistente com o details */
+  background-color: var(--background-light); /* Fundo um pouco mais claro para as ações */
+  gap: 0.5rem; /* Espaço entre os botões */
+}
+
+.button {
+  border: none;
+  padding: 0.6rem 1rem; /* Mais padding para os botões */
+  border-radius: 5px; /* Cantos um pouco mais arredondados */
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease-in-out; /* Transição suave para hovers */
+  flex-grow: 1; /* Faz os botões expandirem igualmente */
+  text-align: center;
+}
+
+.accept {
+  background-color: var(--secondary-color); /* Usando variável */
+  color: white;
+}
+.accept:hover { background-color: #006952; } /* Tom mais escuro */
+
+.refuse {
+  background-color: transparent;
+  color: var(--danger-color); /* Usando variável */
+  border: 1px solid var(--danger-color);
+}
+.refuse:hover { 
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.send {
+  background-color: var(--primary-color); /* Usando variável */
+  color: white;
+  /* width: 100%; */ /* Removido, flex-grow já resolve */
+}
+.send:hover { background-color: #005bb5; }
+
+.finish {
+  background-color: var(--info-color); /* Usando variável */
+  color: white;
+  /* width: 100%; */ /* Removido */
+}
+.finish:hover { background-color: #118293; }

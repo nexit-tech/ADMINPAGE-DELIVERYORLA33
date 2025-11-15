@@ -1,0 +1,48 @@
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0 0 1rem 0; /* Menos margem */
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* Espaçamento entre os itens */
+}
+
+.empty {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* Este é o item de pagamento (Ex: Pix ... R$ 50,00) */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  font-weight: 500;
+  color: var(--text-medium);
+  font-size: 1rem;
+}
+
+.value {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 1rem;
+}
+
+/* Removemos .progressBar, .progress, etc */

@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dateInput {
+  width: 140px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.separator {
+  color: var(--text-medium);
+  font-weight: 500;
+}

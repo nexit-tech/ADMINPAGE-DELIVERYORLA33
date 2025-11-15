@@ -1,0 +1,8 @@
+.mainContainer {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  /* Altura da tela menos a altura da navbar (60px) e o padding total (1.5rem + 1.5rem = 3rem) */
+  height: calc(100vh - 60px - 3rem); 
+  overflow-x: auto;
+}

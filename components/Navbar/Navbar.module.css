@@ -1,0 +1,59 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem; /* Padding só nas laterais */
+  background-color: #fff;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  height: 65px; /* Altura fixa para um visual melhor */
+}
+
+.logo a {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 0.5rem; /* Espaço entre os <li> */
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Faz o <li> ocupar 100% da altura */
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem; /* Espaço entre ícone e texto */
+  text-decoration: none;
+  color: var(--text-medium);
+  font-weight: 500;
+  padding: 0 1.25rem; /* Padding lateral no link */
+  height: 100%; /* Faz o <a> ocupar 100% da altura */
+  
+  /* Borda inferior para o 'active' */
+  border-bottom: 3px solid transparent; 
+  transition: all 0.2s ease-in-out;
+}
+
+.menuLink:hover {
+  color: var(--text-dark);
+  background-color: var(--background-light); /* Efeito hover sutil */
+}
+
+/* Classe para o link ativo */
+.menuLink.active {
+  color: var(--primary-color);
+  font-weight: 600;
+  border-bottom-color: var(--primary-color);
+}
+
+.icon {
+  font-size: 1.3rem; /* Tamanho do ícone */
+  /* Alinha o ícone caso ele esteja descentralizado */
+  position: relative;
+  top: 1px; 
+}
