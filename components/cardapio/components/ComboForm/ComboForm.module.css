@@ -212,3 +212,12 @@
 .saveButton:hover {
   background-color: #006952;
 }
+
+.previewImage {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+}

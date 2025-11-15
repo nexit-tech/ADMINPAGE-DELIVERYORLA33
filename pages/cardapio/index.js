@@ -36,7 +36,7 @@ export default function CardapioPage() {
       // 2. Busca Produtos
       const { data: productsData, error: productsError } = await supabase
         .from('products')
-        .select('*'); // <-- AQUI JÁ VIRÁ O image_url
+        .select('*'); 
       if (productsError) throw productsError;
       setProducts(productsData);
 
@@ -52,11 +52,13 @@ export default function CardapioPage() {
               products (id, name, price)
             )
           )
-        `); // <-- AQUI JÁ VIRÁ O image_url
+        `);
       if (combosError) throw combosError;
       
       const formattedCombos = combosData.map(combo => ({
         ...combo,
+        basePrice: combo.base_price, // <- Garante camelCase para o form
+        imageUrl: combo.image_url,  // <- Garante camelCase para o form
         groups: combo.combo_groups.map(group => ({
           group_id: group.id,
           name: group.name,
@@ -94,6 +96,7 @@ export default function CardapioPage() {
   };
 
   const handleAddCategory = async () => {
+    // ... (função idêntica)
     const newName = prompt('Nome da nova categoria:');
     if (!newName) return;
     try {
@@ -110,9 +113,9 @@ export default function CardapioPage() {
   };
 
   const handleDeleteCategory = async (id, name) => {
+    // ... (função idêntica)
     if (!window.confirm(`Tem certeza que quer excluir a categoria "${name}"? Todos os produtos nela serão perdidos.`)) return;
     try {
-      // TODO: Idealmente, deletar também as imagens do bucket
       const { error } = await supabase.from('categories').delete().eq('id', id);
       if (error) throw error;
       await fetchCardapioData(false, 'promocoes'); 
@@ -121,22 +124,19 @@ export default function CardapioPage() {
     }
   };
 
-  // --- FUNÇÃO MODIFICADA ---
   const handleSaveProduct = async (formData, imageFile) => {
+    // ... (função idêntica)
     setIsProductModalOpen(false);
-    setLoading(true); // Mostra um loading
+    setLoading(true); 
     
     try {
       let finalImageUrl = editingProduct?.image_url || null;
 
-      // 1. Se um novo arquivo de imagem foi enviado
       if (imageFile) {
-        // 1a. Cria um nome único para o arquivo
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
         const filePath = `public/${fileName}`;
 
-        // 1b. Faz o upload para o bucket 'cardapio-imagens'
         const { error: uploadError } = await supabase.storage
           .from('cardapio-imagens')
           .upload(filePath, imageFile);
@@ -145,7 +145,6 @@ export default function CardapioPage() {
           throw uploadError;
         }
 
-        // 1c. Pega a URL pública do arquivo
         const { data: urlData } = supabase.storage
           .from('cardapio-imagens')
           .getPublicUrl(filePath);
@@ -153,13 +152,11 @@ export default function CardapioPage() {
         finalImageUrl = urlData.publicUrl;
       }
 
-      // 2. Prepara os dados para salvar no banco
       const productData = {
         ...formData,
-        image_url: finalImageUrl // Salva a URL
+        image_url: finalImageUrl 
       };
 
-      // 3. Salva no banco de dados (UPDATE ou INSERT)
       if (editingProduct) {
         const { error } = await supabase.from('products').update(productData).eq('id', editingProduct.id);
         if (error) throw error;
@@ -179,9 +176,9 @@ export default function CardapioPage() {
   };
 
   const handleDeleteProduct = async (id, name) => {
+    // ... (função idêntica)
     if (!window.confirm(`Tem certeza que quer excluir o produto "${name}"?`)) return;
     try {
-      // TODO: Idealmente, deletar também as imagens do bucket
       const { error } = await supabase.from('products').delete().eq('id', id);
       if (error) throw error;
       await fetchCardapioData(false, selectedId); 
@@ -190,17 +187,15 @@ export default function CardapioPage() {
     }
   };
 
-  // ... (Restante do arquivo: handleSaveCombo, handleDeleteCombo, etc.) ...
-  // ... (Você precisará aplicar a mesma lógica do handleSaveProduct no handleSaveCombo) ...
-
+  // --- FUNÇÃO MODIFICADA ---
   const handleSaveCombo = async (formData, imageFile) => {
     setIsComboModalOpen(false);
     setLoading(true);
 
     try {
-      let finalImageUrl = editingCombo?.image_url || null;
+      let finalImageUrl = editingCombo?.imageUrl || null; // Pega a URL existente
 
-      // 1. Upload da imagem (se existir)
+      // 1. Upload da imagem (se um novo arquivo foi enviado)
       if (imageFile) {
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `combo-${Date.now()}.${fileExt}`;
@@ -219,8 +214,8 @@ export default function CardapioPage() {
       // 2. Limpa os dados do formulário
       const cleanFormData = {
         name: formData.name,
-        base_price: formData.basePrice, // Corrigido para snake_case
-        image_url: finalImageUrl,       // Adiciona a URL da imagem
+        base_price: formData.basePrice, // <-- CORREÇÃO 1: 'base_price' (snake_case)
+        image_url: finalImageUrl,       // <-- CORREÇÃO 2: 'image_url' (snake_case)
         id: typeof formData.id === 'string' ? formData.id : null, 
         groups: formData.groups.map(g => ({
           id: typeof g.group_id === 'string' ? g.group_id : null, 
@@ -230,25 +225,40 @@ export default function CardapioPage() {
       };
       
       // 3. Salva no banco (via RPC)
-      // SUA RPC 'upsert_combo' PRECISA SER ATUALIZADA PARA ACEITAR 'image_url'
+      // A RPC 'upsert_combo' que rodamos no SQL já aceita 'base_price' e 'image_url'
       const { error } = await supabase.rpc('upsert_combo', { 
         p_combo_data: cleanFormData 
       });
-      if (error) throw error;
+
+      if (error) {
+         // Log detalhado do erro
+        console.error('Erro RPC upsert_combo:', error);
+        throw error;
+      }
       
       await fetchCardapioData(false, 'promocoes');
     } catch (error) {
       console.error('Erro ao salvar promoção:', error.message);
-      alert('Falha ao salvar a promoção.');
+      alert('Falha ao salvar a promoção: ' + error.message);
     } finally {
       setLoading(false);
     }
   };
 
+  // --- FUNÇÃO MODIFICADA ---
+  // A exclusão agora deve funcionar por causa do "ON DELETE CASCADE" do SQL
   const handleDeleteCombo = async (id, name) => {
-    // ... (mesma lógica) ...
+    if (!window.confirm(`Tem certeza que quer excluir a promoção "${name}"?`)) return;
+    try {
+      // O "ON DELETE CASCADE" que ativamos no SQL vai deletar os grupos/itens filhos
+      const { error } = await supabase.from('combos').delete().eq('id', id);
+      if (error) throw error;
+      await fetchCardapioData(false, 'promocoes');
+    } catch (error) {
+      console.error('Erro ao deletar promoção:', error.message);
+      alert('Erro ao deletar: ' + error.message);
+    }
   };
-
 
   // --- RENDERIZAÇÃO ---
   return (
@@ -277,7 +287,7 @@ export default function CardapioPage() {
               setIsComboModalOpen(true);
             }}
             onEditCombo={(combo) => {
-              setEditingCombo(combo); // 'combo' já deve ter 'image_url'
+              setEditingCombo(combo); 
               setIsComboModalOpen(true);
             }}
             onDeleteCombo={handleDeleteCombo}
@@ -292,7 +302,7 @@ export default function CardapioPage() {
               setIsProductModalOpen(true);
             }}
             onEditProduct={(product) => {
-              setEditingProduct(product); // 'product' já deve ter 'image_url'
+              setEditingProduct(product); 
               setIsProductModalOpen(true);
             }}
             onDeleteProduct={handleDeleteProduct}
@@ -316,11 +326,12 @@ export default function CardapioPage() {
         onClose={() => setIsComboModalOpen(false)}
         title={editingCombo ? 'Editar Promoção' : 'Criar Nova Promoção'}
       >
+        {/* Passa a props 'onSubmit' atualizada */}
         <ComboForm
           allProducts={products}
           allCategories={categories}
           initialData={editingCombo || {}}
-          onSubmit={handleSaveCombo} // Você precisará atualizar o ComboForm e o handleSaveCombo
+          onSubmit={handleSaveCombo}
         />
       </Modal>
     </>

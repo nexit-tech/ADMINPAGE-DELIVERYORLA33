@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // <-- Adicionado useEffect
 import styles from './ComboForm.module.css';
 import { IoTrash, IoAdd, IoMenu } from 'react-icons/io5';
 import StyledSelect from '../../../../components/StyledSelect';
 
-// Imports da biblioteca DND-Kit (Core)
+// ... (Imports do DND-Kit não mudam) ...
 import {
   DndContext,
   closestCenter,
@@ -12,20 +12,16 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-
-// Imports da biblioteca DND-Kit (Sortable)
 import {
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
   useSortable,
 } from '@dnd-kit/sortable';
-
-// Imports da biblioteca DND-Kit (Utilities e Modifiers)
 import { CSS } from '@dnd-kit/utilities';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
-// --- COMPONENTE INTERNO DO GRUPO (Item Arrastável) ---
+// ... (Componente GroupEditor não muda) ...
 function GroupEditor({ group, onUpdate, onRemove, provided, snapshot }) {
   const {
     attributes,
@@ -105,17 +101,30 @@ function GroupEditor({ group, onUpdate, onRemove, provided, snapshot }) {
 }
 
 
-// --- COMPONENTE PRINCIPAL DO FORMULÁRIO ---
+// --- COMPONENTE PRINCIPAL DO FORMULÁRIO (MODIFICADO) ---
 export default function ComboForm({ 
   allProducts, 
   allCategories,
-  initialData, // <-- O ID está aqui
+  initialData,
   onSubmit 
 }) {
-  const [name, setName] = useState(initialData.name || '');
-  const [basePrice, setBasePrice] = useState(initialData.basePrice || 0);
-  const [groups, setGroups] = useState(initialData.groups || []);
+  const [name, setName] = useState('');
+  const [basePrice, setBasePrice] = useState(''); // <- Mudar para string
+  const [groups, setGroups] = useState([]);
   const [categoryToAdd, setCategoryToAdd] = useState('');
+  
+  // --- NOVOS ESTADOS PARA IMAGEM ---
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+
+  // --- ATUALIZA O FORMULÁRIO QUANDO 'initialData' MUDA ---
+  useEffect(() => {
+    setName(initialData.name || '');
+    setBasePrice(initialData.basePrice || ''); // Carrega o basePrice
+    setGroups(initialData.groups || []);
+    setImagePreview(initialData.imageUrl || null); // Carrega a imagem
+    setImageFile(null); // Limpa o arquivo
+  }, [initialData]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -128,7 +137,17 @@ export default function ComboForm({
     if (e.key === 'Enter') e.preventDefault();
   };
 
+  // --- NOVA FUNÇÃO PARA PREVIEW DA IMAGEM ---
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
   const handleDragEnd = (event) => {
+    // ... (função idêntica)
     const { active, over } = event;
     if (!over) return;
     if (active.id === over.id) return;
@@ -144,8 +163,8 @@ export default function ComboForm({
     });
   };
 
-  // Adiciona um grupo inteiro (baseado na categoria)
   const handleAddGroup = () => {
+    // ... (função idêntica)
     if (!categoryToAdd) return; 
     
     const categoryId = categoryToAdd; 
@@ -170,33 +189,49 @@ export default function ComboForm({
     setCategoryToAdd(''); 
   };
   
-  // Atualiza um grupo (quando um item é removido/preço muda)
   const handleUpdateGroup = (updatedGroup) => {
+    // ... (função idêntica)
     setGroups(groups.map(g => g.group_id === updatedGroup.group_id ? updatedGroup : g));
   };
   
-  // Remove um grupo inteiro
   const handleRemoveGroup = (groupId) => {
+    // ... (função idêntica)
     setGroups(groups.filter(g => g.group_id !== groupId));
   };
 
-  // Salva o formulário
+  // --- FUNÇÃO onSubmit MODIFICADA ---
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // --- ESTA É A CORREÇÃO ---
-    // Precisamos enviar o ID da promoção (se ele existir) de volta
-    onSubmit({ 
-      id: initialData.id, // <-- Faltava esta linha
+    // Agrupa os dados do formulário
+    const formData = { 
+      id: initialData.id,
       name, 
-      basePrice, 
+      basePrice: parseFloat(basePrice) || 0, // Garante que é número
       groups 
-    });
+    };
+    
+    // Envia os dados E o arquivo da imagem
+    onSubmit(formData, imageFile);
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} onKeyDown={preventEnter}>
-      {/* --- Campos de Nome e Preço --- */}
+      
+      {/* --- CAMPO DE FOTO ADICIONADO --- */}
+      <div className={styles.formGroup}>
+        <label htmlFor="image">Foto da Promoção (Opcional)</label>
+        {imagePreview && (
+          <img src={imagePreview} alt="Preview" className={styles.previewImage} />
+        )}
+        <input
+          id="image"
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={handleImageChange}
+        />
+      </div>
+
       <div className={styles.formGroup}>
         <label>Nome da Promoção</label>
         <input
@@ -214,8 +249,9 @@ export default function ComboForm({
           type="number"
           step="0.01"
           value={basePrice}
-          onChange={(e) => setBasePrice(parseFloat(e.target.value))}
+          onChange={(e) => setBasePrice(e.target.value)}
           onKeyDown={preventEnter}
+          placeholder="Ex: 89.90"
           required
         />
       </div>
@@ -223,7 +259,7 @@ export default function ComboForm({
       <hr className={styles.divider} />
       <h3>Grupos de Produtos</h3>
 
-      {/* --- Contexto do Drag-and-Drop --- */}
+      {/* ... (Resto do DND e Lista de Grupos não muda) ... */}
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -234,7 +270,6 @@ export default function ComboForm({
           items={groups.map(g => g.group_id)} 
           strategy={verticalListSortingStrategy}
         >
-          {/* Container dos grupos arrastáveis */}
           <div className={styles.groupsContainer}>
             {groups.map((group) => (
               <GroupEditor
@@ -247,8 +282,7 @@ export default function ComboForm({
           </div>
         </SortableContext>
       </DndContext>
-
-      {/* --- Controles de Adicionar Grupo --- */}
+      
       <div className={styles.addGroupControls}>
         <div className={styles.selectWrapper}>
           <StyledSelect
@@ -272,7 +306,6 @@ export default function ComboForm({
 
       <hr className={styles.divider} />
       
-      {/* --- Botão Salvar --- */}
       <button type="submit" className={styles.saveButton}>
         Salvar Promoção
       </button>

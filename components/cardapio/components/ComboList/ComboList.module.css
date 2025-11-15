@@ -49,11 +49,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1.5rem; /* <-- ADICIONEI UM GAP */
   background-color: #fff;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* --- ADICIONE ESTAS LINHAS --- */
+.itemImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0; /* Impede a imagem de encolher */
 }
 
 .info { flex: 1; }
