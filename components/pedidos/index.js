@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './pedidos.module.css';
-// 1. CAMINHOS CORRIGIDOS
+// 1. CAMINHOS CORRIGIDOS (agora apontam para a pasta 'components' na raiz)
 import OrderColumn from '../../components/pedidos/OrderColumn';
 import OrderCard from '../../components/pedidos/OrderCard';
 // ---

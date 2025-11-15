@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import styles from './financeiro.module.css';
-import DatePickerRange from '../../components/DatePickerRange';
+import DatePickerRange from '../DatePickerRange';
 // 1. CAMINHOS CORRIGIDOS
 import KpiCard from '../../components/financeiro/KpiCard';
 import OrdersTable from '../../components/financeiro/OrdersTable';
