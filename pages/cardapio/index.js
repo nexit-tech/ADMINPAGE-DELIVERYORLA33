@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import styles from './cardapio.module.css';
+import styles from '../../components/cardapio/cardapio.module.css'; // <- Corrigido
 // 1. CAMINHOS CORRIGIDOS
-import CategoryList from './CategoryList';
-import ProductList from './ProductList';
-import ComboList from './ComboList'; 
+import CategoryList from '../../components/cardapio/components/CategoryList'; // <- Corrigido
+import ProductList from '../../components/cardapio/components/ProductList'; // <- Corrigido
+import ComboList from '../../components/cardapio/components/ComboList';  // <- Corrigido
 import Modal from '../../components/Modal';
-import ProductForm from './ProductForm';
-import ComboForm from './ComboForm'; 
+import ProductForm from '../../components/cardapio/components/ProductForm'; // <- Corrigido
+import ComboForm from '../../components/cardapio/components/ComboForm';  // <- Corrigido
 // ---
 import { supabase } from '../../lib/supabaseClient';
 
