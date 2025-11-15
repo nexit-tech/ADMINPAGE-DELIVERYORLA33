@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './pedidos.module.css';
 // 1. CAMINHOS CORRIGIDOS (agora apontam para a pasta 'components' na raiz)
-import OrderColumn from '../../components/pedidos/OrderColumn';
-import OrderCard from '../../components/pedidos/OrderCard';
+import OrderColumn from './OrderColumn';
+import OrderCard from './OrderCard';
 // ---
 import { supabase } from '../../lib/supabaseClient'; 
 import { buscarTodosPedidos, moverPedido, deletarPedido, formatarPedido } from '../../services/pedidos'; 
