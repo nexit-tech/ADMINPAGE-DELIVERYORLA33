@@ -2,11 +2,13 @@ import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import styles from './financeiro.module.css';
 import DatePickerRange from '../../components/DatePickerRange';
-import KpiCard from './components/KpiCard';
-import OrdersTable from './components/OrdersTable';
-import PaymentBreakdown from './components/PaymentBreakdown';
-import ProductsSoldTable from './components/ProductsSoldTable';
-import { buscarTodasTransacoes } from '../../services/financeiro'; // Importa do ficheiro CERTO
+// 1. CAMINHOS CORRIGIDOS
+import KpiCard from '../../components/financeiro/KpiCard';
+import OrdersTable from '../../components/financeiro/OrdersTable';
+import PaymentBreakdown from '../../components/financeiro/PaymentBreakdown';
+import ProductsSoldTable from '../../components/financeiro/ProductsSoldTable';
+// ---
+import { buscarTodasTransacoes } from '../../services/financeiro';
 import { IoAnalyticsOutline, IoCartOutline, IoCashOutline, IoNewspaperOutline, IoCalendarOutline, IoPodiumOutline, IoDocumentTextOutline } from 'react-icons/io5';
 
 const formatCurrency = (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -23,7 +25,7 @@ export default function FinanceiroPage() {
 
   async function fetchFinancialData() {
     setLoading(true);
-    const data = await buscarTodasTransacoes(); // Chama a função correta
+    const data = await buscarTodasTransacoes(); 
     setAllOrders(data);
     setFilteredOrders(data);
     setLoading(false);
@@ -71,9 +73,11 @@ export default function FinanceiroPage() {
 
   }, [dateRange, allOrders, loading]);
 
+
   const handleExport = () => {
     alert('Exportando relatório... (lógica a implementar)');
   };
+
 
   return (
     <>

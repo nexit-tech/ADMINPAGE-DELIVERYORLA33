@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from './pedidos.module.css';
-import OrderColumn from './components/OrderColumn';
-import OrderCard from './components/OrderCard';
-// 1. IMPORTAR O SUPABASE E O NOVO HELPER
-import { supabase } from '../../lib/supabaseClient';
-import { buscarTodosPedidos, moverPedido, deletarPedido, formatarPedido } from '../../services/pedidos';
+// 1. CAMINHOS CORRIGIDOS
+import OrderColumn from '../../components/pedidos/OrderColumn';
+import OrderCard from '../../components/pedidos/OrderCard';
+// ---
+import { supabase } from '../../lib/supabaseClient'; 
+import { buscarTodosPedidos, moverPedido, deletarPedido, formatarPedido } from '../../services/pedidos'; 
 
 function PedidosPage() {
   const [pedidos, setPedidos] = useState([]);
@@ -18,29 +19,22 @@ function PedidosPage() {
   };
 
   useEffect(() => {
-    // 2. BUSCA OS PEDIDOS INICIAIS
     carregarPedidos();
 
-    // 3. REMOVEMOS O 'setInterval' E ADICIONAMOS A SUBINSCRIÇÃO
     const subscription = supabase
-      .channel('admin-pedidos-channel') // Nome único para o canal
+      .channel('admin-pedidos-channel')
       .on(
         'postgres_changes',
         {
-          event: 'INSERT', // Escuta SÓ por novos pedidos (INSERT)
+          event: 'INSERT',
           schema: 'public',
           table: 'orders',
-          filter: 'status=eq.pending' // Opcional: só nos avise se o status for 'pending'
+          filter: 'status=eq.pending'
         },
         (payload) => {
           console.log('Novo pedido recebido!', payload.new);
-          
-          // 4. Traduz o novo pedido usando o helper
           const novoPedidoFormatado = formatarPedido(payload.new);
-          
-          // 5. Adiciona o pedido novo no TOPO da lista (FIFO)
           setPedidos((currentPedidos) => {
-            // Evita duplicar caso o pedido já tenha sido carregado
             if (currentPedidos.some(p => p.id === novoPedidoFormatado.id)) {
               return currentPedidos;
             }
@@ -48,15 +42,12 @@ function PedidosPage() {
           });
         }
       )
-      .subscribe(); // Inicia a escuta
+      .subscribe(); 
 
-    // 6. LIMPA A SUBINSCRIÇÃO QUANDO A PÁGINA FECHA
     return () => {
       supabase.removeChannel(subscription);
     };
-  }, []); // [] vazias = Roda só uma vez
-
-  // ... (o resto do teu ficheiro: getProximoStatus, handleMoverPedido, etc... FICA IGUAL) ...
+  }, []);
 
   const getProximoStatus = (statusAtual) => {
       if (statusAtual === 'Novo') return 'preparing';
@@ -107,7 +98,7 @@ function PedidosPage() {
   const pedidosEmEntrega = pedidos.filter(p => p.status === 'Em entrega');
 
   if (loading) {
-     return (
+    return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 100px)' }}>
         <p>Carregando pedidos...</p>
       </div>

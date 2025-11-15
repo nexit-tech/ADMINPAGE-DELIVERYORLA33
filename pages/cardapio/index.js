@@ -1,12 +1,14 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import styles from './cardapio.module.css';
-import CategoryList from './components/CategoryList';
-import ProductList from './components/ProductList';
-import ComboList from './components/ComboList'; 
+// 1. CAMINHOS CORRIGIDOS
+import CategoryList from '../../components/cardapio/CategoryList';
+import ProductList from '../../components/cardapio/ProductList';
+import ComboList from '../../components/cardapio/ComboList'; 
 import Modal from '../../components/Modal';
-import ProductForm from './components/ProductForm';
-import ComboForm from './components/ComboForm'; 
+import ProductForm from '../../components/cardapio/ProductForm';
+import ComboForm from '../../components/cardapio/ComboForm'; 
+// ---
 import { supabase } from '../../lib/supabaseClient';
 
 export default function CardapioPage() {
@@ -54,17 +56,14 @@ export default function CardapioPage() {
         `);
       if (combosError) throw combosError;
       
-      // --- CORREÇÃO DO ERRO 'Cannot read properties of null' ---
       const formattedCombos = combosData.map(combo => ({
         ...combo,
         groups: combo.combo_groups.map(group => ({
           group_id: group.id,
           name: group.name,
-          // 1. Filtra itens "quebrados" (onde item.products é null)
           items: group.combo_group_items
-            .filter(item => item.products) // <-- SÓ CONTINUA SE item.products NÃO FOR NULL
+            .filter(item => item.products) 
             .map(item => ({
-              // 2. Agora isso é seguro
               productId: item.products.id, 
               name: item.products.name,
               additionalPrice: item.additional_price,
@@ -73,7 +72,6 @@ export default function CardapioPage() {
         }))
       }));
       setCombos(formattedCombos);
-      // --- FIM DA CORREÇÃO ---
       
       if (newSelectedId) {
         setSelectedId(newSelectedId);
@@ -83,8 +81,6 @@ export default function CardapioPage() {
 
     } catch (error) {
       console.error('Erro ao buscar dados do Supabase:', error.message);
-      // Oculta o alert() para não travar o usuário
-      // alert('Não foi possível carregar o cardápio. Verifique o console.');
     } finally {
       if (isInitialLoad) setLoading(false);
     }
